@@ -390,7 +390,7 @@ body {
 
 .about-content {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     margin-bottom: 40px;
 }
@@ -429,6 +429,17 @@ body {
     color: var(--text-secondary);
     line-height: 1.8;
     font-size: 1.1rem;
+}
+
+.village-line {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--accent);
+    border-radius: 15px;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    line-height: 1.9;
 }
 
 /* Skills Section */

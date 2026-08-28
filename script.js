@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Typing effect
     const titleElement = document.querySelector('.title');
     if (titleElement) {
-        typeWriter(titleElement, 'Student');
+        typeWriter(titleElement, 'LinkedIn Seller');
     }
 });
 
