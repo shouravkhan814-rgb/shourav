@@ -113,11 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     handleScrollAnimations();
     animateSkills();
     
-    // Typing effect
-    const titleElement = document.querySelector('.title');
-    if (titleElement) {
-        typeWriter(titleElement, 'LinkedIn Seller');
-    }
+    // Typing effect removed
 });
 
 // Tilt Effect on Profile Image
