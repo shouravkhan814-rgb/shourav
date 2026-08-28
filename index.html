@@ -25,9 +25,9 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <p class="greeting">Hello, I'm</p>
-                <h1 class="name">Shourav Hossain</h1>
-                <p class="subtitle">One-time LinkedIn Seller</p>
+                <span class="badge"><i class="fas fa-check-circle"></i> Available for work</span>
+                <h1 class="name">Shourav <span>Hossain</span></h1>
+                <p class="subtitle">One-time LinkedIn Solutions, Delivered with Trust</p>
                 <p class="location"><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</p>
                 <div class="social-links">
                     <a href="https://www.facebook.com/shourav169" target="_blank"><i class="fab fa-facebook"></i></a>
@@ -35,7 +35,10 @@
                     <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
                     <a href="https://wa.me/8801773497376" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
-                <a href="#contact" class="btn">Get in Touch</a>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn">Get in Touch</a>
+                    <a href="#services" class="btn-outline">View Services</a>
+                </div>
             </div>
             <div class="hero-image">
                 <div class="image-wrapper">
@@ -59,10 +62,24 @@
             <p>I'm <span class="highlight">Shourav Hossain</span>, a professional one-time LinkedIn seller from Dhaka, Bangladesh. I believe in hard work and always try my best to serve my clients with honesty and professionalism. I am currently studying at the <span class="highlight">Department of English, Northern University Bangladesh</span>.</p>
             <p class="village-line">I truly love my village home. The peaceful environment, open fields, and natural beauty there make me feel at ease. No matter what, I always find peace of mind only in my village home.</p>
         </div>
+        <div class="stats-bar">
+            <div class="stat">
+                <h3>100%</h3>
+                <p>Client Satisfaction</p>
+            </div>
+            <div class="stat">
+                <h3>24/7</h3>
+                <p>Fast Support</p>
+            </div>
+            <div class="stat">
+                <h3>1:1</h3>
+                <p>Trusted Service</p>
+            </div>
+        </div>
     </section>
 
     <section id="services" class="services">
-        <h2 class="section-title">My Services</h2>
+        <h2 class="section-title">My Service</h2>
         <div class="services-grid">
             <div class="service-card">
                 <i class="fas fa-user-edit"></i>
@@ -136,12 +153,13 @@
                 </div>
             </div>
             <form class="contact-form" onsubmit="sendWhatsApp(event)">
-                <h3>Send Message via WhatsApp</h3>
+                <h3><i class="fab fa-whatsapp"></i> Send Me a Message</h3>
+                <p class="form-subtitle">Fill this in and your message goes straight to my WhatsApp.</p>
                 <input type="text" id="name" placeholder="Your Name" required>
                 <input type="email" id="email" placeholder="Your Email" required>
-                <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
+                <textarea id="message" placeholder="Write your message..." rows="4" required></textarea>
                 <button type="submit" class="btn"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
-                <span class="form-note">Your message will open in WhatsApp and go directly to me.</span>
+                <span class="form-note"><i class="fas fa-lock"></i> Opens WhatsApp to send your message directly to me.</span>
             </form>
         </div>
     </section>

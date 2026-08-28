@@ -21,7 +21,9 @@ function sendWhatsApp(event) {
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
 
-    const text = `Hello Shourav, I am ${name}.\nEmail: ${email}\n\n${message}`;
+    const text = `Hello Shourav, I'm ${name}.\n\n${message}\n\n` +
+                 `My contact: ${email}`;
+
     const encoded = encodeURIComponent(text);
     const url = `https://wa.me/8801773497376?text=${encoded}`;
 
