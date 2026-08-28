@@ -7,16 +7,31 @@ function createParticles() {
         const particle = document.createElement('div');
         particle.classList.add('particle');
         particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 15 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particle.style.animationDelay = Math.random() * 18 + 's';
+        particle.style.animationDuration = (Math.random() * 12 + 12) + 's';
         particles.appendChild(particle);
     }
 }
 
+// WhatsApp Form Submit
+function sendWhatsApp(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    const text = `Hello Shourav, I am ${name}.\nEmail: ${email}\n\n${message}`;
+    const encoded = encodeURIComponent(text);
+    const url = `https://wa.me/8801773497376?text=${encoded}`;
+
+    window.open(url, '_blank');
+}
+
 // Scroll Animations
 function handleScrollAnimations() {
-    const elements = document.querySelectorAll('.about-card, .skill-item, .contact-item');
-    
+    const elements = document.querySelectorAll('.service-card, .edu-item, .contact-item, .about-text');
+
     elements.forEach(el => {
         el.classList.add('fade-in');
     });
@@ -30,22 +45,6 @@ function handleScrollAnimations() {
     }, { threshold: 0.1 });
 
     elements.forEach(el => observer.observe(el));
-}
-
-// Skill Bar Animation
-function animateSkills() {
-    const skillBars = document.querySelectorAll('.skill-progress');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const progress = entry.target.getAttribute('data-progress');
-                entry.target.style.width = progress + '%';
-            }
-        });
-    }, { threshold: 0.5 });
-
-    skillBars.forEach(bar => observer.observe(bar));
 }
 
 // Smooth Scroll
@@ -66,54 +65,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(10, 10, 15, 0.95)';
+        navbar.style.background = 'rgba(0, 0, 0, 0.92)';
     } else {
-        navbar.style.background = 'rgba(10, 10, 15, 0.8)';
+        navbar.style.background = 'rgba(0, 0, 0, 0.7)';
     }
-});
-
-// Typing Effect for Title
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.textContent = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    type();
-}
-
-// Form Submission
-document.querySelector('.contact-form')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const btn = this.querySelector('.btn');
-    const originalText = btn.textContent;
-    btn.textContent = 'Sending...';
-    
-    setTimeout(() => {
-        btn.textContent = 'Sent!';
-        btn.style.background = '#00d2d3';
-        
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.background = '';
-            this.reset();
-        }, 2000);
-    }, 1500);
-});
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    createParticles();
-    handleScrollAnimations();
-    animateSkills();
-    
-    // Typing effect removed
 });
 
 // Tilt Effect on Profile Image
@@ -125,13 +80,19 @@ if (profileImage) {
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
-        
+        const rotateX = (y - centerY) / 25;
+        const rotateY = (centerX - x) / 25;
+
         profileImage.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     });
-    
+
     profileImage.addEventListener('mouseleave', () => {
         profileImage.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
     });
 }
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    createParticles();
+    handleScrollAnimations();
+});

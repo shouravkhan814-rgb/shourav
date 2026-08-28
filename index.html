@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shourav Hossain</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Particles Background -->
     <div class="particles" id="particles"></div>
 
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">Shourav</div>
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#education">Education</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
             <div class="hero-text">
+                <p class="greeting">Hello, I'm</p>
                 <h1 class="name">Shourav Hossain</h1>
+                <p class="subtitle">One-time LinkedIn Seller</p>
                 <p class="location"><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</p>
                 <div class="social-links">
                     <a href="https://www.facebook.com/shourav169" target="_blank"><i class="fab fa-facebook"></i></a>
@@ -35,7 +35,7 @@
                     <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
                     <a href="https://wa.me/8801773497376" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
-                <a href="#contact" class="btn">Contact Me</a>
+                <a href="#contact" class="btn">Get in Touch</a>
             </div>
             <div class="hero-image">
                 <div class="image-wrapper">
@@ -53,83 +53,69 @@
         </div>
     </section>
 
-    <!-- About Section -->
     <section id="about" class="about">
         <h2 class="section-title">About Me</h2>
-        <div class="about-content">
-            <div class="about-card">
-                <i class="fas fa-user-graduate"></i>
-                <h3>School</h3>
-                <p>Civil Aviation High School</p>
-            </div>
-            <div class="about-card">
-                <i class="fas fa-graduation-cap"></i>
-                <h3>College</h3>
-                <p>Uttara High School and College</p>
-            </div>
-            <div class="about-card">
-                <i class="fas fa-briefcase"></i>
-                <h3>Profession</h3>
-                <p>LinkedIn Seller</p>
-            </div>
-            <div class="about-card">
-                <i class="fas fa-map-marker-alt"></i>
-                <h3>Location</h3>
-                <p>Dhaka, Bangladesh</p>
-            </div>
-        </div>
         <div class="about-text">
-            <p>I'm Shourav Hossain, a professional one-time LinkedIn seller from Dhaka, Bangladesh. I studied at Civil Aviation High School and Uttara High School and College. I believe in hard work and always try my best to serve my clients with honesty and professionalism.</p>
+            <p>I'm <span class="highlight">Shourav Hossain</span>, a professional one-time LinkedIn seller from Dhaka, Bangladesh. I believe in hard work and always try my best to serve my clients with honesty and professionalism. I am currently studying at the <span class="highlight">Department of English, Northern University Bangladesh</span>.</p>
             <p class="village-line">I truly love my village home. The peaceful environment, open fields, and natural beauty there make me feel at ease. No matter what, I always find peace of mind only in my village home.</p>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <h2 class="section-title">LinkedIn Services</h2>
-        <div class="skills-container">
-            <div class="skill-item">
-                <div class="skill-info">
-                    <span>LinkedIn Profile Creation</span>
-                    <span>95%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" data-progress="95"></div>
+    <section id="services" class="services">
+        <h2 class="section-title">My Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-user-edit"></i>
+                <h3>LinkedIn Profile Creation</h3>
+                <p>Professional profile creation tailored to your goals.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-handshake"></i>
+                <h3>LinkedIn Account Selling</h3>
+                <p>Genuine one-time LinkedIn accounts for serious buyers.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-tasks"></i>
+                <h3>Profile Optimization</h3>
+                <p>Enhance your profile to attract more connections and clients.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-headset"></i>
+                <h3>Customer Service</h3>
+                <p>Fast, friendly, and honest support for every client.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="education">
+        <h2 class="section-title">Education</h2>
+        <div class="edu-timeline">
+            <div class="edu-item">
+                <div class="edu-icon"><i class="fas fa-school"></i></div>
+                <div>
+                    <h3>Civil Aviation High School</h3>
+                    <p>School Education</p>
                 </div>
             </div>
-            <div class="skill-item">
-                <div class="skill-info">
-                    <span>LinkedIn Account Selling</span>
-                    <span>90%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" data-progress="90"></div>
+            <div class="edu-item">
+                <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div>
+                    <h3>Uttara High School and College</h3>
+                    <p>College Education</p>
                 </div>
             </div>
-            <div class="skill-item">
-                <div class="skill-info">
-                    <span>Profile Optimization</span>
-                    <span>85%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" data-progress="85"></div>
-                </div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-info">
-                    <span>Customer Service</span>
-                    <span>95%</span>
-                </div>
-                <div class="skill-bar">
-                    <div class="skill-progress" data-progress="95"></div>
+            <div class="edu-item">
+                <div class="edu-icon"><i class="fas fa-university"></i></div>
+                <div>
+                    <h3>Northern University Bangladesh</h3>
+                    <p>Department of English</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="contact">
-        <h2 class="section-title">Contact Me</h2>
+        <h2 class="section-title">Get in Touch</h2>
         <div class="contact-container">
             <div class="contact-info">
                 <div class="contact-item">
@@ -138,27 +124,28 @@
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-phone"></i>
-                    <p>+880 01773497376</p>
+                    <p>+880 1773497376</p>
                 </div>
                 <div class="contact-item">
                     <i class="fab fa-whatsapp"></i>
-                    <p>+880 01773497376</p>
+                    <p>+880 1773497376</p>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
                     <p>Dhaka, Bangladesh</p>
                 </div>
             </div>
-            <form class="contact-form">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" rows="5" required></textarea>
-                <button type="submit" class="btn">Send Message</button>
+            <form class="contact-form" onsubmit="sendWhatsApp(event)">
+                <h3>Send Message via WhatsApp</h3>
+                <input type="text" id="name" placeholder="Your Name" required>
+                <input type="email" id="email" placeholder="Your Email" required>
+                <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit" class="btn"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
+                <span class="form-note">Your message will open in WhatsApp and go directly to me.</span>
             </form>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2026 Shourav Hossain. All Rights Reserved.</p>
     </footer>
@@ -166,3 +153,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
