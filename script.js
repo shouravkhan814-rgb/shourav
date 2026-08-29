@@ -153,6 +153,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* ---------------- PATTERN SHOWCASE 3D TILT ---------------- */
+    const showcaseItems = document.querySelectorAll('.showcase-3d');
+    if (showcaseItems.length && canHover && !prefersReducedMotion) {
+        showcaseItems.forEach(card => {
+            const shine = card.querySelector('.showcase-shine');
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect();
+                const px = (e.clientX - r.left) / r.width - 0.5;
+                const py = (e.clientY - r.top) / r.height - 0.5;
+                card.style.transform = `rotateY(${px * 14}deg) rotateX(${py * -14}deg)`;
+                if (shine) {
+                    const mx = ((e.clientX - r.left) / r.width) * 100;
+                    const my = ((e.clientY - r.top) / r.height) * 100;
+                    card.style.setProperty('--mx', mx + '%');
+                    card.style.setProperty('--my', my + '%');
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateY(0) rotateX(0)';
+            });
+        });
+    }
+
     /* ---------------- GALLERY LIGHTBOX ---------------- */
     const lightbox = document.getElementById('lightbox');
     const masonryItems = Array.from(document.querySelectorAll('.masonry-item'));
