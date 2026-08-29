@@ -93,6 +93,32 @@ if (profileImage) {
     });
 }
 
+// Gallery Lightbox
+function openLightbox(src) {
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox';
+    overlay.onclick = () => overlay.remove();
+
+    const img = document.createElement('img');
+    img.src = src;
+
+    const close = document.createElement('span');
+    close.className = 'lightbox-close';
+    close.innerHTML = '&times;';
+    close.onclick = () => overlay.remove();
+
+    overlay.appendChild(img);
+    overlay.appendChild(close);
+    document.body.appendChild(overlay);
+}
+
+document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        if (img) openLightbox(img.src);
+    });
+});
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     createParticles();
