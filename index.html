@@ -3,205 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shourav Hossain</title>
+    <title>Shourav Hossain — Portfolio</title>
+    <meta name="description" content="Shourav Hossain — professional LinkedIn solutions provider from Dhaka, Bangladesh.">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="particles" id="particles"></div>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
 
-    <nav class="navbar">
-        <div class="logo">Shourav</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+    <!-- Background layers -->
+    <div class="bg-noise" aria-hidden="true"></div>
+    <div class="bg-blob blob-1" aria-hidden="true"></div>
+    <div class="bg-blob blob-2" aria-hidden="true"></div>
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <span class="badge"><i class="fas fa-check-circle"></i> Available for work</span>
-                <h1 class="name">Shourav <span>Hossain</span></h1>
-                <p class="subtitle">Turning Ideas into <span>Trust</span></p>
-                <p class="location"><i class="fas fa-map-marker-alt"></i> Dhaka, Bangladesh</p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/shourav169" target="_blank"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.instagram.com/_shourav_z/" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://wa.me/8801773497376" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                </div>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn">Get in Touch</a>
-                    <a href="#services" class="btn-outline">View Services</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="image-glow"></div>
-                <div class="image-wrapper">
-                    <div class="profile-placeholder">
-                        <img src="profile.jpg" alt="Shourav Hossain">
+    <!-- Scroll progress -->
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <a class="logo" href="#home">Shourav<span>.</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="nav-menu" id="navMenu">
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <p class="badge"><i class="fas fa-circle" aria-hidden="true"></i> Available for work</p>
+                    <h1 class="name">Shourav <span>Hossain</span></h1>
+                    <p class="subtitle">Turning Ideas into <span>Trust</span></p>
+                    <p class="location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Dhaka, Bangladesh</p>
+                    <p class="hero-desc">Professional LinkedIn solutions — profile creation, optimization, and personalized support built on honesty and reliability.</p>
+                    <div class="hero-actions">
+                        <a href="#services" class="btn">View Services</a>
+                        <a href="#contact" class="btn ghost">Get in Touch</a>
                     </div>
-                    <div class="border-animation"></div>
-                    <div class="status-badge">
-                        <span class="status-dot"></span>
-                        Online
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/shourav169" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/_shourav_z/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                        <a href="https://wa.me/8801773497376" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="about">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-text">
-            <p>I'm <span class="highlight">Shourav Hossain</span>, a professional one-time LinkedIn seller from Dhaka, Bangladesh. I believe in hard work and always try my best to serve my clients with honesty and professionalism. I am currently studying at the <span class="highlight">Department of English, Northern University Bangladesh</span>.</p>
-            <p class="village-line">I truly love my village home. The peaceful environment, open fields, and natural beauty there make me feel at ease. No matter what, I always find peace of mind only in my village home.</p>
-        </div>
-        <div class="stats-bar">
-            <div class="stat">
-                <h3>100%</h3>
-                <p>Client Satisfaction</p>
-            </div>
-            <div class="stat">
-                <h3>24/7</h3>
-                <p>Fast Support</p>
-            </div>
-            <div class="stat">
-                <h3>1:1</h3>
-                <p>Trusted Service</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="services">
-        <h2 class="section-title">My Service</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <i class="fas fa-user-edit"></i>
-                <h3>LinkedIn Profile Creation</h3>
-                <p>Professional profile creation tailored to your goals.</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-handshake"></i>
-                <h3>LinkedIn Account Selling</h3>
-                <p>Genuine one-time LinkedIn accounts for serious buyers.</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-tasks"></i>
-                <h3>Profile Optimization</h3>
-                <p>Enhance your profile to attract more connections and clients.</p>
-            </div>
-            <div class="service-card">
-                <i class="fas fa-headset"></i>
-                <h3>Customer Service</h3>
-                <p>Fast, friendly, and honest support for every client.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="education" class="education">
-        <h2 class="section-title">Education</h2>
-        <div class="edu-timeline">
-            <div class="edu-item">
-                <div class="edu-icon"><i class="fas fa-school"></i></div>
-                <div>
-                    <h3>Civil Aviation High School</h3>
-                    <p>School Education</p>
-                </div>
-            </div>
-            <div class="edu-item">
-                <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
-                <div>
-                    <h3>Uttara High School and College</h3>
-                    <p>College Education</p>
-                </div>
-            </div>
-            <div class="edu-item">
-                <div class="edu-icon"><i class="fas fa-university"></i></div>
-                <div>
-                    <h3>Northern University Bangladesh</h3>
-                    <p>Department of English</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="gallery" class="gallery">
-        <h2 class="section-title">My Gallery</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="gallery1.jpg" alt="Gallery 1">
-                <div class="gallery-overlay">
-                    <div class="gallery-caption">
-                        <span class="gallery-tag">Life</span>
-                        <h3>My Moments</h3>
+                <div class="hero-visual">
+                    <div class="portrait-frame">
+                        <div class="portrait">
+                            <img src="profile.jpg" alt="Portrait of Shourav Hossain">
+                        </div>
+                        <span class="portrait-ring" aria-hidden="true"></span>
+                        <div class="status-badge"><span class="status-dot"></span> Online</div>
                     </div>
                 </div>
             </div>
-            <div class="gallery-item">
-                <img src="gallery2.jpg" alt="Gallery 2">
-                <div class="gallery-overlay">
-                    <div class="gallery-caption">
-                        <span class="gallery-tag">Style</span>
-                        <h3>Memories</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="gallery3.jpg" alt="Gallery 3">
-                <div class="gallery-overlay">
-                    <div class="gallery-caption">
-                        <span class="gallery-tag">Vibes</span>
-                        <h3>Good Times</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            <a href="#about" class="scroll-cue" aria-label="Scroll to about">
+                <span class="cue-line"></span>
+            </a>
+        </section>
 
-    <section id="contact" class="contact">
-        <h2 class="section-title">Get in Touch</h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <p>shouravkhan814@gmail.com</p>
+        <!-- About -->
+        <section id="about" class="section about">
+            <div class="section-head reveal">
+                <span class="eyebrow">Profile</span>
+                <h2 class="section-title">About Me</h2>
+            </div>
+            <div class="about-text reveal">
+                <p>I'm <span class="highlight">Shourav Hossain</span>, a professional one-time LinkedIn seller from Dhaka, Bangladesh. I believe in hard work and always try my best to serve my clients with honesty and professionalism. I am currently studying at the <span class="highlight">Department of English, Northern University Bangladesh</span>.</p>
+                <p class="village-line">I truly love my village home. The peaceful environment, open fields, and natural beauty there make me feel at ease. No matter what, I always find peace of mind only in my village home.</p>
+            </div>
+            <div class="stats-bar reveal">
+                <div class="stat">
+                    <h3>100%</h3>
+                    <p>Client Satisfaction</p>
                 </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <p>+880 1773497376</p>
+                <div class="stat">
+                    <h3>24/7</h3>
+                    <p>Fast Support</p>
                 </div>
-                <div class="contact-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <p>+880 1773497376</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>Dhaka, Bangladesh</p>
+                <div class="stat">
+                    <h3>1:1</h3>
+                    <p>Trusted Service</p>
                 </div>
             </div>
-            <form class="contact-form" onsubmit="sendWhatsApp(event)">
-                <h3><i class="fab fa-whatsapp"></i> Send Me a Message</h3>
-                <p class="form-subtitle">Fill this in and your message goes straight to my WhatsApp.</p>
-                <input type="text" id="name" placeholder="Your Name" required>
-                <input type="email" id="email" placeholder="Your Email" required>
-                <textarea id="message" placeholder="Write your message..." rows="4" required></textarea>
-                <button type="submit" class="btn"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
-                <span class="form-note"><i class="fas fa-lock"></i> Opens WhatsApp to send your message directly to me.</span>
-            </form>
-        </div>
-    </section>
+        </section>
+
+        <!-- Services -->
+        <section id="services" class="section services">
+            <div class="section-head reveal">
+                <span class="eyebrow">What I Do</span>
+                <h2 class="section-title">My Service</h2>
+            </div>
+            <div class="services-grid">
+                <div class="card reveal reveal--d1">
+                    <div class="card-icon"><i class="fas fa-user-edit" aria-hidden="true"></i></div>
+                    <h3>LinkedIn Profile Creation</h3>
+                    <p>Professional profile creation tailored to your goals.</p>
+                </div>
+                <div class="card reveal reveal--d2">
+                    <div class="card-icon"><i class="fas fa-handshake" aria-hidden="true"></i></div>
+                    <h3>LinkedIn Account Selling</h3>
+                    <p>Genuine one-time LinkedIn accounts for serious buyers.</p>
+                </div>
+                <div class="card reveal reveal--d3">
+                    <div class="card-icon"><i class="fas fa-tasks" aria-hidden="true"></i></div>
+                    <h3>Profile Optimization</h3>
+                    <p>Enhance your profile to attract more connections and clients.</p>
+                </div>
+                <div class="card reveal reveal--d4">
+                    <div class="card-icon"><i class="fas fa-headset" aria-hidden="true"></i></div>
+                    <h3>Customer Service</h3>
+                    <p>Fast, friendly, and honest support for every client.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section id="education" class="section education">
+            <div class="section-head reveal">
+                <span class="eyebrow">Journey</span>
+                <h2 class="section-title">Education</h2>
+            </div>
+            <div class="edu-timeline">
+                <div class="card edu-item reveal">
+                    <div class="card-icon"><i class="fas fa-school" aria-hidden="true"></i></div>
+                    <div>
+                        <h3>Civil Aviation High School</h3>
+                        <p>School Education</p>
+                    </div>
+                </div>
+                <div class="card edu-item reveal reveal--d1">
+                    <div class="card-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+                    <div>
+                        <h3>Uttara High School and College</h3>
+                        <p>College Education</p>
+                    </div>
+                </div>
+                <div class="card edu-item reveal reveal--d2">
+                    <div class="card-icon"><i class="fas fa-university" aria-hidden="true"></i></div>
+                    <div>
+                        <h3>Northern University Bangladesh</h3>
+                        <p>Department of English</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section id="gallery" class="section gallery">
+            <div class="section-head reveal">
+                <span class="eyebrow">Moments</span>
+                <h2 class="section-title">Gallery</h2>
+            </div>
+            <div class="gallery-grid">
+                <figure class="gallery-item reveal reveal--d1">
+                    <img src="gallery1.jpg" alt="Gallery 1">
+                    <figcaption><span>Life</span>My Moments</figcaption>
+                </figure>
+                <figure class="gallery-item reveal reveal--d2">
+                    <img src="gallery2.jpg" alt="Gallery 2">
+                    <figcaption><span>Style</span>Memories</figcaption>
+                </figure>
+                <figure class="gallery-item reveal reveal--d3">
+                    <img src="gallery3.jpg" alt="Gallery 3">
+                    <figcaption><span>Vibes</span>Good Times</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="section contact">
+            <div class="section-head reveal">
+                <span class="eyebrow">Let's Talk</span>
+                <h2 class="section-title">Get in Touch</h2>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info reveal">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <p>shouravkhan814@gmail.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <p>+880 1773497376</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        <p>+880 1773497376</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <p>Dhaka, Bangladesh</p>
+                    </div>
+                </div>
+                <form class="contact-form reveal" onsubmit="sendWhatsApp(event)">
+                    <h3>Send Me a Message</h3>
+                    <p class="form-subtitle">Message goes straight to my WhatsApp.</p>
+                    <input type="text" id="name" placeholder="Your Name" required>
+                    <input type="email" id="email" placeholder="Your Email" required>
+                    <textarea id="message" placeholder="Write your message..." rows="4" required></textarea>
+                    <button type="submit" class="btn"><i class="fab fa-whatsapp" aria-hidden="true"></i> Send via WhatsApp</button>
+                    <span class="form-note">Opens WhatsApp to send your message directly to me.</span>
+                </form>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 Shourav Hossain. All Rights Reserved.</p>
@@ -210,4 +231,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-

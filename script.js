@@ -1,19 +1,4 @@
-// Particles Animation
-function createParticles() {
-    const particles = document.getElementById('particles');
-    const count = 50;
-
-    for (let i = 0; i < count; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 18 + 's';
-        particle.style.animationDuration = (Math.random() * 12 + 12) + 's';
-        particles.appendChild(particle);
-    }
-}
-
-// WhatsApp Form Submit
+// ============ WhatsApp Form Submit ============
 function sendWhatsApp(event) {
     event.preventDefault();
 
@@ -30,97 +15,156 @@ function sendWhatsApp(event) {
     window.open(url, '_blank');
 }
 
-// Scroll Animations
-function handleScrollAnimations() {
-    const elements = document.querySelectorAll('.service-card, .edu-item, .contact-item, .about-text');
+// ============ Navbar background on scroll + Scroll progress + Active link ============
+const navbar = document.querySelector('.navbar');
+const progressBar = document.querySelector('.scroll-progress span');
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
 
-    elements.forEach(el => {
-        el.classList.add('fade-in');
+function onScroll() {
+    // Navbar style
+    if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+
+    // Scroll progress
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
+
+    // Active nav link
+    let current = '';
+    sections.forEach(section => {
+        const top = section.offsetTop - 120;
+        if (window.scrollY >= top) {
+            current = section.getAttribute('id');
+        }
     });
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    elements.forEach(el => observer.observe(el));
+    navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
 }
 
-// Smooth Scroll
+window.addEventListener('scroll', onScroll);
+onScroll();
+
+// ============ Smooth scroll (anchor links) ============
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            closeMenu();
+            history.replaceState(null, null, href);
         }
     });
 });
 
-// Navbar Background on Scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(0, 0, 0, 0.92)';
-    } else {
-        navbar.style.background = 'rgba(0, 0, 0, 0.7)';
-    }
-});
+// ============ Mobile menu ============
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.getElementById('navMenu');
 
-// Tilt Effect on Profile Image
-const profileImage = document.querySelector('.image-wrapper');
-if (profileImage) {
-    profileImage.addEventListener('mousemove', (e) => {
-        const rect = profileImage.getBoundingClientRect();
+function closeMenu() {
+    if (navMenu && navMenu.classList.contains('open')) {
+        navMenu.classList.remove('open');
+        menuToggle.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+    }
+}
+
+if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('open');
+        menuToggle.classList.toggle('open', isOpen);
+        menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+}
+
+// ============ Scroll reveal ============
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ============ Custom cursor (desktop only) ============
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const dot = document.querySelector('.cursor-dot');
+    const glow = document.querySelector('.cursor-glow');
+
+    let mouseX = 0, mouseY = 0;
+    let glowX = 0, glowY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
+    });
+
+    // Smooth trailing for the glow ring
+    function animateGlow() {
+        glowX += (mouseX - glowX) * 0.12;
+        glowY += (mouseY - glowY) * 0.12;
+        glow.style.left = glowX + 'px';
+        glow.style.top = glowY + 'px';
+        requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+
+    // Cursor grows over interactive elements
+    const interactive = 'a, button, .card, .gallery-item, input, textarea';
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest(interactive)) {
+            dot.style.width = '16px';
+            dot.style.height = '16px';
+            glow.style.width = '56px';
+            glow.style.height = '56px';
+            glow.style.borderColor = 'var(--gold-glow)';
+        }
+    });
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest(interactive)) {
+            dot.style.width = '8px';
+            dot.style.height = '8px';
+            glow.style.width = '40px';
+            glow.style.height = '40px';
+            glow.style.borderColor = 'var(--gold-soft)';
+        }
+    });
+}
+
+// ============ Tilt effect on portrait ============
+const portrait = document.querySelector('.portrait-frame');
+if (portrait) {
+    portrait.addEventListener('mousemove', (e) => {
+        const rect = portrait.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 25;
-        const rotateY = (centerX - x) / 25;
-
-        profileImage.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        const rx = (y - cy) / 30;
+        const ry = (cx - x) / 30;
+        portrait.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
     });
-
-    profileImage.addEventListener('mouseleave', () => {
-        profileImage.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+    portrait.addEventListener('mouseleave', () => {
+        portrait.style.transform = 'perspective(900px) rotateX(0) rotateY(0)';
     });
+    portrait.style.transition = 'transform 0.25s ease, box-shadow 0.4s ease';
 }
 
-// Gallery Lightbox
-function openLightbox(src) {
-    const overlay = document.createElement('div');
-    overlay.className = 'lightbox';
-    overlay.onclick = () => overlay.remove();
-
-    const img = document.createElement('img');
-    img.src = src;
-
-    const close = document.createElement('span');
-    close.className = 'lightbox-close';
-    close.innerHTML = '&times;';
-    close.onclick = () => overlay.remove();
-
-    overlay.appendChild(img);
-    overlay.appendChild(close);
-    document.body.appendChild(overlay);
-}
-
-document.querySelectorAll('.gallery-item').forEach(item => {
-    item.addEventListener('click', () => {
-        const img = item.querySelector('img');
-        if (img) openLightbox(img.src);
-    });
-});
-
-// Initialize
+// ============ Initialize ============
 document.addEventListener('DOMContentLoaded', () => {
-    createParticles();
-    handleScrollAnimations();
+    // Contact form submit handler (kept inline in HTML, nothing to do here)
 });
