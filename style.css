@@ -287,6 +287,10 @@ main, section, footer, header { position: relative; z-index: 1; }
 }
 .eyebrow { display: inline-block; font-size: .76rem; letter-spacing: .34em; text-transform: uppercase; color: var(--gold); margin-top: 18px; font-weight: 500; }
 .section-title { font-family: var(--font-head); font-size: clamp(2.2rem, 5vw, 3.3rem); font-weight: 500; letter-spacing: -.01em; line-height: 1.12; text-wrap: balance; }
+.section-head::after {
+    content: ''; display: block; width: 54px; height: 1px; margin: 26px auto 0;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
 
 /* ================= ABOUT ================= */
 .about { max-width: 1180px; margin: 0 auto; }
