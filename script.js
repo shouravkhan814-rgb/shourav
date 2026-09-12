@@ -87,17 +87,17 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(loop);
         };
         loop();
-        const interactive = 'a, button, .card, .masonry-item, input, textarea, .menu-toggle';
+        const interactive = 'a, button, .card, input, textarea, .menu-toggle, .skill-card';
         document.querySelectorAll(interactive).forEach(el => {
             el.addEventListener('mouseenter', () => {
                 dot.style.width = '0px'; dot.style.height = '0px';
                 glow.style.width = '54px'; glow.style.height = '54px';
-                glow.style.borderColor = 'rgba(198,166,107,.5)';
+                glow.style.borderColor = 'rgba(111,227,255,.55)';
             });
             el.addEventListener('mouseleave', () => {
                 dot.style.width = '6px'; dot.style.height = '6px';
                 glow.style.width = '38px'; glow.style.height = '38px';
-                glow.style.borderColor = 'rgba(198,166,107,.18)';
+                glow.style.borderColor = 'rgba(111,227,255,.18)';
             });
         });
     }
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.4 });
     if (counters.length) counterObserver.observe(counters[0]);
 
-    /* ---------------- PORTRAIT TILT ---------------- */
+    /* ---------------- PORTRAIT / ORB TILT ---------------- */
     const portraitFrame = document.querySelector('.portrait-frame');
     if (portraitFrame && canHover && !prefersReducedMotion) {
         portraitFrame.addEventListener('mousemove', e => {
@@ -151,6 +151,34 @@ document.addEventListener('DOMContentLoaded', () => {
         portraitFrame.addEventListener('mouseleave', () => {
             portraitFrame.style.transform = 'perspective(900px) rotateY(0) rotateX(0)';
         });
+    }
+
+    /* ---------------- SKILL BARS ---------------- */
+    const skillCards = document.querySelectorAll('.skill-card');
+    if (skillCards.length) {
+        const skillObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const card = entry.target;
+                card.querySelectorAll('.skill-fill').forEach(fill => {
+                    fill.style.width = fill.getAttribute('data-w');
+                });
+                card.querySelectorAll('.skill-pct').forEach(pct => {
+                    const target = parseInt(pct.getAttribute('data-pct'), 10);
+                    const dur = 1400;
+                    const start = performance.now();
+                    const step = now => {
+                        const p = Math.min((now - start) / dur, 1);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        pct.textContent = Math.floor(eased * target) + '%';
+                        if (p < 1) requestAnimationFrame(step);
+                    };
+                    requestAnimationFrame(step);
+                });
+                skillObserver.unobserve(card);
+            });
+        }, { threshold: 0.5 });
+        skillCards.forEach(c => skillObserver.observe(c));
     }
 
     /* ---------------- PATTERN SHOWCASE 3D TILT ---------------- */
@@ -176,50 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ---------------- GALLERY LIGHTBOX ---------------- */
-    const lightbox = document.getElementById('lightbox');
-    const masonryItems = Array.from(document.querySelectorAll('.masonry-item'));
-    let currentIndex = 0;
-    const lbImg = document.getElementById('lbImg');
-    const lbTag = document.getElementById('lbTag');
-    const lbCap = document.getElementById('lbCap');
-
-    function openLightbox(i) {
-        if (!lightbox || !masonryItems.length) return;
-        currentIndex = (i + masonryItems.length) % masonryItems.length;
-        const item = masonryItems[currentIndex];
-        const img = item.querySelector('img');
-        lbImg.src = img.getAttribute('src');
-        lbImg.alt = img.getAttribute('alt');
-        lbTag.textContent = item.getAttribute('data-tag') || '';
-        lbCap.textContent = item.getAttribute('data-caption') || '';
-        lightbox.classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-    function closeLightbox() {
-        if (!lightbox) return;
-        lightbox.classList.remove('open');
-        document.body.style.overflow = '';
-    }
-
-    masonryItems.forEach((item, i) => item.addEventListener('click', () => openLightbox(i)));
-
-    const lbClose = document.getElementById('lbClose');
-    const lbPrev = document.getElementById('lbPrev');
-    const lbNext = document.getElementById('lbNext');
-    if (lbClose) lbClose.addEventListener('click', closeLightbox);
-    if (lbPrev) lbPrev.addEventListener('click', () => openLightbox(currentIndex - 1));
-    if (lbNext) lbNext.addEventListener('click', () => openLightbox(currentIndex + 1));
-    if (lightbox) {
-        lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-        document.addEventListener('keydown', e => {
-            if (!lightbox.classList.contains('open')) return;
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') openLightbox(currentIndex - 1);
-            if (e.key === 'ArrowRight') openLightbox(currentIndex + 1);
-        });
-    }
-
     /* ---------------- FOOTER YEAR ---------------- */
     const year = document.getElementById('year');
     if (year) year.textContent = new Date().getFullYear();
@@ -228,13 +212,15 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ---------------- WHATSAPP FORM ---------------- */
 function sendWhatsApp(event) {
     event.preventDefault();
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
+    const form = event.target;
+    const isFooter = form.classList.contains('footer-consult');
+    const name = document.getElementById(isFooter ? 'footer-name' : 'name').value.trim();
+    const email = document.getElementById(isFooter ? 'footer-email' : 'email').value.trim();
+    const message = document.getElementById(isFooter ? 'footer-message' : 'message').value.trim();
     if (!name || !email || !message) return;
 
     const text = [
-        'New message from website:',
+        (isFooter ? 'New consultation request from website:' : 'New message from website:'),
         '',
         'Name: ' + name,
         'Email: ' + email,
@@ -243,5 +229,5 @@ function sendWhatsApp(event) {
     ].join('\n');
 
     window.open('https://wa.me/8801773497376?text=' + encodeURIComponent(text), '_blank');
-    event.target.reset();
+    form.reset();
 }
