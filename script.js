@@ -69,39 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
     }
 
-    /* ---------------- CUSTOM CURSOR (desktop only) ---------------- */
-    const dot = document.querySelector('.cursor-dot');
-    const glow = document.querySelector('.cursor-glow');
-    if (canHover && dot && glow) {
-        let x = 0, y = 0, gx = 0, gy = 0;
-        window.addEventListener('mousemove', e => {
-            x = e.clientX; y = e.clientY;
-            dot.style.left = x + 'px';
-            dot.style.top = y + 'px';
-        });
-        const loop = () => {
-            gx += (x - gx) * 0.14;
-            gy += (y - gy) * 0.14;
-            glow.style.left = gx + 'px';
-            glow.style.top = gy + 'px';
-            requestAnimationFrame(loop);
-        };
-        loop();
-        const interactive = 'a, button, .card, input, textarea, .menu-toggle, .skill-card';
-        document.querySelectorAll(interactive).forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                dot.style.width = '0px'; dot.style.height = '0px';
-                glow.style.width = '54px'; glow.style.height = '54px';
-                glow.style.borderColor = 'rgba(111,227,255,.55)';
-            });
-            el.addEventListener('mouseleave', () => {
-                dot.style.width = '6px'; dot.style.height = '6px';
-                glow.style.width = '38px'; glow.style.height = '38px';
-                glow.style.borderColor = 'rgba(111,227,255,.18)';
-            });
-        });
-    }
-
     /* ---------------- SCROLL REVEAL ---------------- */
     const reveals = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver(entries => {
