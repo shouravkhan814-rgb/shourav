@@ -8,6 +8,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+    /* ---------------- THEME TOGGLE (dark/light) ---------------- */
+    const themeToggle = document.getElementById('themeToggle');
+    const applyTheme = (theme, save) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        if (themeToggle) {
+            const moon = themeToggle.querySelector('.fa-moon');
+            const sun = themeToggle.querySelector('.fa-sun');
+            if (moon) moon.style.display = theme === 'dark' ? '' : 'none';
+            if (sun) sun.style.display = theme === 'dark' ? 'none' : '';
+            themeToggle.setAttribute('aria-pressed', theme !== 'dark');
+        }
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'light' ? '#F5F1E8' : '#07130F');
+        if (save) localStorage.setItem('shourav-theme', theme);
+    };
+    if (themeToggle) {
+        const sun = document.createElement('i');
+        sun.className = 'fas fa-sun';
+        sun.setAttribute('aria-hidden', 'true');
+        sun.style.display = 'none';
+        themeToggle.appendChild(sun);
+        const saved = localStorage.getItem('shourav-theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        applyTheme(saved || (prefersLight ? 'light' : 'dark'), false);
+        themeToggle.addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(next, true);
+        });
+    }
+
     /* ---------------- PAGE LOADER ---------------- */
     const loader = document.getElementById('loader');
     const hideLoader = () => {
@@ -148,29 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
         skillCards.forEach(c => skillObserver.observe(c));
     }
 
-    /* ---------------- PATTERN SHOWCASE 3D TILT ---------------- */
-    const showcaseItems = document.querySelectorAll('.showcase-3d');
-    if (showcaseItems.length && canHover && !prefersReducedMotion) {
-        showcaseItems.forEach(card => {
-            const shine = card.querySelector('.showcase-shine');
-            card.addEventListener('mousemove', e => {
-                const r = card.getBoundingClientRect();
-                const px = (e.clientX - r.left) / r.width - 0.5;
-                const py = (e.clientY - r.top) / r.height - 0.5;
-                card.style.transform = `rotateY(${px * 14}deg) rotateX(${py * -14}deg)`;
-                if (shine) {
-                    const mx = ((e.clientX - r.left) / r.width) * 100;
-                    const my = ((e.clientY - r.top) / r.height) * 100;
-                    card.style.setProperty('--mx', mx + '%');
-                    card.style.setProperty('--my', my + '%');
-                }
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'rotateY(0) rotateX(0)';
-            });
-        });
-    }
-
     /* ---------------- FOOTER YEAR ---------------- */
     const year = document.getElementById('year');
     if (year) year.textContent = new Date().getFullYear();
@@ -198,3 +205,194 @@ function sendWhatsApp(event) {
     window.open('https://wa.me/8801773497376?text=' + encodeURIComponent(text), '_blank');
     form.reset();
 }
+
+/* ---------------- KNIT MACHINE EXPLODED VIEW REPLAY ---------------- */
+const knitBg = document.querySelector('.bg-knit');
+let knitAutoBurst = null;
+function knitBurst() {
+    if (!knitBg) return;
+    knitBg.classList.add('knit-burst');
+    setTimeout(() => knitBg.classList.remove('knit-burst'), 12000);
+}
+if (knitBg && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.addEventListener('load', () => {
+        setTimeout(knitBurst, 3000);
+        knitAutoBurst = setInterval(knitBurst, 22000);
+    });
+}
+const knitStopAuto = () => {
+    if (knitAutoBurst) { clearInterval(knitAutoBurst); knitAutoBurst = null; }
+};
+
+/* ---------------- HERO MACHINE CONTROLS (ROTATE / EXPLODE / ASSEMBLE) ---------------- */
+(function () {
+    const rotateBtn = document.getElementById('knitRotateBtn');
+    const explodeBtn = document.getElementById('knitExplodeBtn');
+    const assembleBtn = document.getElementById('knitAssembleBtn');
+    if (!knitBg && !(rotateBtn || explodeBtn || assembleBtn)) return;
+
+    if (rotateBtn) rotateBtn.addEventListener('click', () => {
+        const paused = knitBg.classList.toggle('knit-paused');
+        rotateBtn.classList.toggle('on', paused);
+        rotateBtn.setAttribute('aria-pressed', paused);
+        rotateBtn.querySelector('span').textContent = paused ? 'Resume' : 'Rotate';
+    });
+    if (explodeBtn) explodeBtn.addEventListener('click', () => {
+        knitStopAuto();
+        knitBg.classList.add('knit-burst');
+        explodeBtn.classList.add('on');
+        assembleBtn.classList.remove('on');
+    });
+    if (assembleBtn) assembleBtn.addEventListener('click', () => {
+        knitStopAuto();
+        knitBg.classList.remove('knit-burst');
+        assembleBtn.classList.add('on');
+        explodeBtn.classList.remove('on');
+    });
+})();
+
+/* ---------------- EXPLORE MACHINE INTERACTIONS ---------------- */
+(function () {
+    const stage = document.getElementById('exploreStage');
+    const viewport = document.getElementById('exploreViewport');
+    const rotor = document.getElementById('exploreRotor');
+    const explodeBtn = document.getElementById('explodeBtn');
+    const assembleBtn = document.getElementById('assembleBtn');
+    const spinToggle = document.getElementById('spinToggle');
+    const nameEl = document.getElementById('exploreName');
+    const fnEl = document.getElementById('exploreFn');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!stage || !viewport || !rotor) return;
+
+    const parts = stage.querySelectorAll('.ex-part');
+    let yaw = -14, baseYaw = -14, spinning = false, dragging = false, lastX = 0;
+
+    const render = () => {
+        rotor.style.transform = 'rotateX(-4deg) rotateY(' + yaw + 'deg)';
+    };
+    const swing = () => {
+        if (reduced) return;
+        if (spinning) {
+            yaw += 0.35;
+        } else if (!dragging) {
+            yaw = baseYaw + Math.sin(performance.now() / 1000 * 0.5) * 10;
+        }
+        render();
+        requestAnimationFrame(swing);
+    };
+    requestAnimationFrame(swing);
+    render();
+
+    const setSpinUI = () => {
+        if (!spinToggle) return;
+        spinToggle.textContent = spinning ? 'Pause Rotation' : 'Resume Rotation';
+    };
+
+    viewport.addEventListener('pointerdown', e => {
+        if (e.target.closest('.explore-note, .explore-actions, .ex-part')) return;
+        dragging = true;
+        lastX = e.clientX;
+        if (viewport.setPointerCapture) viewport.setPointerCapture(e.pointerId);
+    });
+    viewport.addEventListener('pointermove', e => {
+        if (!dragging) return;
+        baseYaw += (e.clientX - lastX) * 0.4;
+        lastX = e.clientX;
+        yaw = baseYaw;
+    });
+    const stopDrag = () => { dragging = false; };
+    viewport.addEventListener('pointerup', stopDrag);
+    viewport.addEventListener('pointercancel', stopDrag);
+    viewport.addEventListener('pointerleave', stopDrag);
+
+    explodeBtn.addEventListener('click', () => stage.classList.add('exploded'));
+    assembleBtn.addEventListener('click', () => stage.classList.remove('exploded'));
+    spinToggle.addEventListener('click', () => {
+        spinning = !spinning;
+        setSpinUI();
+    });
+
+    parts.forEach(part => {
+        part.addEventListener('click', e => {
+            e.stopPropagation();
+            parts.forEach(p => p.classList.remove('active'));
+            part.classList.add('active');
+            if (nameEl) nameEl.textContent = part.getAttribute('data-name') || 'Component';
+            if (fnEl) fnEl.textContent = part.getAttribute('data-fn') || '';
+            if (!stage.classList.contains('exploded')) explodeBtn.click();
+        });
+        part.addEventListener('mouseenter', () => {
+            parts.forEach(p => p.classList.remove('active'));
+            part.classList.add('active');
+            if (nameEl) nameEl.textContent = part.getAttribute('data-name') || 'Component';
+            if (fnEl) fnEl.textContent = part.getAttribute('data-fn') || '';
+        });
+        part.addEventListener('mouseleave', () => {
+            if (stage.querySelector('.ex-part.active') === part) part.classList.remove('active');
+        });
+    });
+})();
+
+/* ---------------- PROCESS SCRUB ---------------- */
+(function () {
+    const scrub = document.getElementById('processScrub');
+    const track = scrub && scrub.querySelector('.process-track');
+    const stages = scrub && Array.prototype.slice.call(scrub.querySelectorAll('.process-stage'));
+    if (!scrub || !track) return;
+
+    const onScrub = () => {
+        const r = scrub.getBoundingClientRect();
+        const total = r.height;
+        const traveled = Math.min(Math.max(window.innerHeight - r.top, 0), total);
+        const progress = total > 0 ? traveled / total : 0;
+        track.style.setProperty('--pr', progress);
+
+        if (stages) stages.forEach(stage => {
+            const pr = stage.getBoundingClientRect();
+            stage.classList.toggle('in', pr.top < window.innerHeight * 0.72 && pr.bottom > window.innerHeight * 0.28);
+        });
+    };
+    window.addEventListener('scroll', onScrub, { passive: true });
+    onScrub();
+})();
+
+/* ---------------- CORE EXPERTISE ROW DWELL (subtle) ---------------- */
+(function () {
+    const rows = document.querySelectorAll('.skill-row');
+    rows.forEach(row => {
+        row.addEventListener('mouseenter', () => row.style.background = 'rgba(94,234,212,0.028)');
+        row.addEventListener('mouseleave', () => row.style.background = '');
+    });
+})();
+
+/* ---------------- EXPLORE META (MATERIAL / MECHANISM) ---------------- */
+(function () {
+    const mat = document.getElementById('exploreMat');
+    const mech = document.getElementById('exploreMech');
+    const fill = part => {
+        if (!mat || !mech) return;
+        mat.textContent = part.getAttribute('data-material') || '—';
+        mech.textContent = part.getAttribute('data-mech') || '—';
+    };
+    if (!mat || !mech) return;
+    document.querySelectorAll('.ex-part').forEach(part => {
+        part.addEventListener('click', () => fill(part), true);
+        part.addEventListener('mouseenter', () => fill(part), true);
+    });
+})();
+
+/* ---------------- MAGNETIC BUTTONS ---------------- */
+(function () {
+    const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!fine || reduced) return;
+    document.querySelectorAll('.hero-actions .btn, .cta-actions .btn').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+            const r = btn.getBoundingClientRect();
+            const dx = (e.clientX - r.left - r.width / 2) / r.width;
+            const dy = (e.clientY - r.top - r.height / 2) / r.height;
+            btn.style.transform = 'translate(' + dx * 7 + 'px,' + dy * 5 + 'px)';
+        });
+        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
+})();
