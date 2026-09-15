@@ -386,7 +386,7 @@ const knitStopAuto = () => {
     const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!fine || reduced) return;
-    document.querySelectorAll('.hero-actions .btn, .cta-actions .btn').forEach(btn => {
+    document.querySelectorAll('.hero-actions .btn, .cta-actions .btn, .contact-actions .btn').forEach(btn => {
         btn.addEventListener('mousemove', e => {
             const r = btn.getBoundingClientRect();
             const dx = (e.clientX - r.left - r.width / 2) / r.width;
@@ -395,6 +395,30 @@ const knitStopAuto = () => {
         });
         btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
     });
+})();
+
+/* ---------------- SUBTLE HERO PARALLAX ---------------- */
+(function () {
+    const hero = document.querySelector('.hero');
+    const text = document.querySelector('.hero-text');
+    const machine = document.querySelector('.hero-machine');
+    if (!hero || !text) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let raf = null;
+    const onScroll = () => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+            raf = null;
+            const r = hero.getBoundingClientRect();
+            if (r.bottom < 0 || r.top > window.innerHeight) return;
+            const p = Math.max(0, window.innerHeight - r.top);
+            const y = Math.min(p * 0.045, 90);
+            text.style.transform = 'translate3d(0,' + (-y) + 'px,0)';
+            if (machine) machine.style.transform = 'translate3d(0,' + (y * 0.55) + 'px,0)';
+        });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 })();
 
 /* ---------------- EDUCATION TIMELINE — SCROLL DRAW + ILLUMINATION ---------------- */
@@ -436,4 +460,37 @@ const knitStopAuto = () => {
     window.addEventListener('scroll', fill, { passive: true });
     window.addEventListener('resize', fill, { passive: true });
     fill();
+})();
+
+/* ---------------- KNITTING SHOWCASE HOTSPOTS ---------------- */
+(function () {
+    const machine = document.querySelector('.ks-machine');
+    const items = Array.prototype.slice.call(document.querySelectorAll('.ks-item'));
+    const dots = Array.prototype.slice.call(document.querySelectorAll('.ks-dot'));
+    if (!machine || (!items.length && !dots.length)) return;
+
+    const setActive = id => {
+        dots.forEach(d => d.classList.toggle('active', d.getAttribute('data-ks') === id));
+        items.forEach(i => i.classList.toggle('active', i.getAttribute('data-ks') === id));
+    };
+
+    items.forEach(item => {
+        item.addEventListener('mouseenter', () => setActive(item.getAttribute('data-ks')));
+        item.addEventListener('mouseleave', () => setActive(null));
+        item.addEventListener('click', () => setActive(item.getAttribute('data-ks')));
+        item.addEventListener('focus', () => setActive(item.getAttribute('data-ks')));
+        item.addEventListener('blur', () => setActive(null));
+    });
+    dots.forEach(dot => {
+        dot.addEventListener('click', e => {
+            e.stopPropagation();
+            setActive(dot.getAttribute('data-ks'));
+        });
+        dot.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setActive(dot.getAttribute('data-ks'));
+            }
+        });
+    });
 })();
