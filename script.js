@@ -396,3 +396,44 @@ const knitStopAuto = () => {
         btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
     });
 })();
+
+/* ---------------- EDUCATION TIMELINE — SCROLL DRAW + ILLUMINATION ---------------- */
+(function () {
+    const timeline = document.getElementById('eduTimeline');
+    const progress = document.getElementById('tlProgress');
+    const stages = [document.getElementById('edStage1'), document.getElementById('edStage2'), document.getElementById('edStage3')].filter(Boolean);
+    if (!timeline || !progress || stages.length === 0) return;
+
+    const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const S = window.scrollY;
+    const H = window.innerHeight;
+
+    const fill = () => {
+        const r = timeline.getBoundingClientRect();
+        const total = r.height;
+        const start = H * 0.7;
+        const end = H * 0.25;
+        let t = (start - r.top) / (start - end);
+        t = Math.min(1, Math.max(0, t));
+        if (prefersReduced) t = 1;
+        progress.style.height = (t * 100) + '%';
+    };
+
+    const obs = 'IntersectionObserver' in window && !prefersReduced
+        ? new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('lit');
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.4 })
+        : null;
+
+    stages.forEach(st => { if (obs) obs.observe(st); else st.classList.add('lit'); });
+    if (prefersReduced) progress.style.height = '100%';
+
+    window.addEventListener('scroll', fill, { passive: true });
+    window.addEventListener('resize', fill, { passive: true });
+    fill();
+})();
